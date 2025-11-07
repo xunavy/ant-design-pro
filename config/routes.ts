@@ -51,7 +51,20 @@ export default [
     path: '/list',
     component: './table-list',
   },
-  {    name: 'feishu.message-collection',    icon: 'message',    path: '/feishu/message-collection',    component: './feishu/message-collection',    access: 'canAdmin',  },  {    name: 'feishu.statistics',    icon: 'barChart',    path: '/feishu/statistics',    component: './feishu/statistics',    access: 'canAdmin',  },
+  {
+    name: 'feishu.message-collection',
+    icon: 'message',
+    path: '/feishu/message-collection',
+    component: './feishu/message-collection',
+    access: 'canAdmin',
+  },
+  {
+    name: 'feishu.statistics',
+    icon: 'barChart',
+    path: '/feishu/statistics',
+    component: './feishu/statistics',
+    access: 'canAdmin',
+  },
   {
     path: '/',
     redirect: '/welcome',

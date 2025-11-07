@@ -1,6 +1,6 @@
+import { MessageOutlined, NumberOutlined } from '@ant-design/icons';
+import { Card, Space, Statistic, Table } from 'antd';
 import React from 'react';
-import { Card, Table, Tag, Space, Statistic } from 'antd';
-import { UserOutlined, MessageOutlined, NumberOutlined } from '@ant-design/icons';
 import type { SingleFieldStat } from '@/services/feishu/typings';
 
 interface SingleKeywordStatsProps {
@@ -16,8 +16,12 @@ const SingleKeywordStats: React.FC<SingleKeywordStatsProps> = ({ data }) => {
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      {data.map((item, index) => (
-        <Card key={index} title={`关键字: ${item.keyword}`} bordered={false}>
+      {data.map((item) => (
+        <Card
+          key={item.keyword}
+          title={`关键字: ${item.keyword}`}
+          bordered={false}
+        >
           <div style={{ marginBottom: 24 }}>
             <Space size="large">
               <Statistic

@@ -1,8 +1,24 @@
-import React, { useState } from 'react';
-import { Form, Input, Select, DatePicker, Button, Space, Row, Col, Tag } from 'antd';
-import { SearchOutlined, FilterOutlined, ClearOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import type { FormInstance } from 'antd/es/form';
+import {
+  ClearOutlined,
+  FilterOutlined,
+  MinusOutlined,
+  PlusOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Tag,
+} from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
+import type { FormInstance } from 'antd/es/form';
+import React, { useState } from 'react';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -11,7 +27,9 @@ interface StatisticsFilterProps {
   onFilterChange: (params: any) => void;
 }
 
-const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ onFilterChange }) => {
+const StatisticsFilter: React.FC<StatisticsFilterProps> = ({
+  onFilterChange,
+}) => {
   const [form] = Form.useForm<FormInstance>();
   const [dateRange, setDateRange] = useState<RangePickerProps['value']>([]);
   const [keywords, setKeywords] = useState<string[]>([]);
@@ -25,7 +43,7 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ onFilterChange }) =
   };
 
   const handleRemoveKeyword = (keyword: string) => {
-    setKeywords(keywords.filter(k => k !== keyword));
+    setKeywords(keywords.filter((k) => k !== keyword));
   };
 
   const handleSearch = () => {
@@ -49,12 +67,25 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ onFilterChange }) =
   };
 
   return (
-    <div style={{ background: '#fff', padding: 20, borderRadius: 8, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-      <Form form={form} layout="vertical" initialValues={{ matchMode: 'fuzzy' }}>
+    <div
+      style={{
+        background: '#fff',
+        padding: 20,
+        borderRadius: 8,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+      }}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        initialValues={{ matchMode: 'fuzzy' }}
+      >
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="关键字">
-              <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+              <div
+                style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}
+              >
                 <Input
                   placeholder="输入关键字"
                   value={keywordInput}
@@ -71,9 +102,21 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ onFilterChange }) =
                   添加
                 </Button>
               </div>
-              <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              <div
+                style={{
+                  marginTop: 8,
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 8,
+                }}
+              >
                 {keywords.map((keyword) => (
-                  <Tag key={keyword} color="blue" closable onClose={() => handleRemoveKeyword(keyword)}>
+                  <Tag
+                    key={keyword}
+                    color="blue"
+                    closable
+                    onClose={() => handleRemoveKeyword(keyword)}
+                  >
                     {keyword}
                     <MinusOutlined style={{ marginLeft: 4 }} />
                   </Tag>
@@ -96,15 +139,26 @@ const StatisticsFilter: React.FC<StatisticsFilterProps> = ({ onFilterChange }) =
               <RangePicker
                 showTime
                 value={dateRange}
-                onChange={(date, dateString) => setDateRange(date)}
+                onChange={(date, _dateString) => setDateRange(date)}
                 placeholder={['开始时间', '结束时间']}
                 style={{ width: '100%' }}
               />
             </Form.Item>
           </Col>
-          <Col span={12} style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+          <Col
+            span={12}
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'flex-end',
+            }}
+          >
             <Space size="middle">
-              <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch}>
+              <Button
+                type="primary"
+                icon={<SearchOutlined />}
+                onClick={handleSearch}
+              >
                 统计
               </Button>
               <Button icon={<FilterOutlined />} onClick={handleSearch}>

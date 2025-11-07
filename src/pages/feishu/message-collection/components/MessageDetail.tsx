@@ -1,14 +1,14 @@
-import React from 'react';
-import { Modal, Card, Descriptions, Tag, Space, Tooltip } from 'antd';
-import { 
-  MessageOutlined, 
-  FileTextOutlined, 
-  PictureOutlined, 
-  AudioOutlined, 
-  VideoCameraOutlined, 
-  UserOutlined, 
-  PaperClipOutlined
+import {
+  AudioOutlined,
+  FileTextOutlined,
+  MessageOutlined,
+  PaperClipOutlined,
+  PictureOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
 } from '@ant-design/icons';
+import { Card, Descriptions, Modal, Space, Tag } from 'antd';
+import React from 'react';
 import type { Message } from '@/models/feishu';
 
 interface MessageDetailProps {
@@ -17,7 +17,11 @@ interface MessageDetailProps {
   onClose: () => void;
 }
 
-const MessageDetail: React.FC<MessageDetailProps> = ({ visible, message, onClose }) => {
+const MessageDetail: React.FC<MessageDetailProps> = ({
+  visible,
+  message,
+  onClose,
+}) => {
   if (!message) return null;
 
   // 根据消息类型获取对应的图标
@@ -32,7 +36,9 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ visible, message, onClose
       case 'audio':
         return <AudioOutlined style={{ color: '#722ed1', fontSize: 24 }} />;
       case 'video':
-        return <VideoCameraOutlined style={{ color: '#eb2f96', fontSize: 24 }} />;
+        return (
+          <VideoCameraOutlined style={{ color: '#eb2f96', fontSize: 24 }} />
+        );
       default:
         return <MessageOutlined style={{ color: '#1890ff', fontSize: 24 }} />;
     }
@@ -83,12 +89,14 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ visible, message, onClose
           </Descriptions.Item>
           <Descriptions.Item label="发送人">
             <Space align="center">
-              <img 
-                src={message.sender.avatar} 
-                alt={message.sender.name} 
-                style={{ width: 40, height: 40, borderRadius: '50%' }} 
+              <img
+                src={message.sender.avatar}
+                alt={message.sender.name}
+                style={{ width: 40, height: 40, borderRadius: '50%' }}
               />
-              <span style={{ fontSize: 16, fontWeight: 500 }}>{message.sender.name}</span>
+              <span style={{ fontSize: 16, fontWeight: 500 }}>
+                {message.sender.name}
+              </span>
               <Tag color="blue">ID: {message.sender.id}</Tag>
             </Space>
           </Descriptions.Item>
@@ -96,15 +104,21 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ visible, message, onClose
             {new Date(message.timestamp).toLocaleString()}
           </Descriptions.Item>
           <Descriptions.Item label="消息内容">
-            <div style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: 14 }}>
+            <div
+              style={{
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                fontSize: 14,
+              }}
+            >
               {message.content}
             </div>
           </Descriptions.Item>
           {message.mentionedUsers && message.mentionedUsers.length > 0 && (
             <Descriptions.Item label="@成员">
               <Space wrap>
-                {message.mentionedUsers.map((user, index) => (
-                  <Tag key={index} color="blue" icon={<UserOutlined />}>
+                {message.mentionedUsers.map((user) => (
+                  <Tag key={user.id} color="blue" icon={<UserOutlined />}>
                     {user.name} (ID: {user.id})
                   </Tag>
                 ))}
@@ -113,12 +127,21 @@ const MessageDetail: React.FC<MessageDetailProps> = ({ visible, message, onClose
           )}
           {message.attachments && message.attachments.length > 0 && (
             <Descriptions.Item label="附件">
-              <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-                {message.attachments.map((attach, index) => (
-                  <div key={index} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Space
+                direction="vertical"
+                size="middle"
+                style={{ width: '100%' }}
+              >
+                {message.attachments.map((attach) => (
+                  <div
+                    key={`${attach.name}-${attach.type}-${attach.size}`}
+                    style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+                  >
                     <PaperClipOutlined style={{ color: '#1890ff' }} />
                     <span style={{ flex: 1 }}>{attach.name}</span>
-                    {attach.size && <Tag color="gray">{formatFileSize(attach.size)}</Tag>}
+                    {attach.size && (
+                      <Tag color="gray">{formatFileSize(attach.size)}</Tag>
+                    )}
                   </div>
                 ))}
               </Space>

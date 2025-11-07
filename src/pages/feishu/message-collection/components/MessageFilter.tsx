@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { Form, Input, Select, DatePicker, Button, Space, Row, Col } from 'antd';
-import { SearchOutlined, FilterOutlined, ClearOutlined } from '@ant-design/icons';
-import type { FormInstance } from 'antd/es/form';
+import {
+  ClearOutlined,
+  FilterOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+import { Button, Col, DatePicker, Form, Input, Row, Select, Space } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
+import type { FormInstance } from 'antd/es/form';
+import React, { useState } from 'react';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -33,12 +37,26 @@ const MessageFilter: React.FC<MessageFilterProps> = ({ onFilterChange }) => {
   };
 
   return (
-    <div style={{ background: '#fff', padding: 20, borderRadius: 8, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-      <Form form={form} layout="vertical" initialValues={{ matchMode: 'fuzzy', messageType: 'all' }}>
+    <div
+      style={{
+        background: '#fff',
+        padding: 20,
+        borderRadius: 8,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+      }}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        initialValues={{ matchMode: 'fuzzy', messageType: 'all' }}
+      >
         <Row gutter={16}>
           <Col span={8}>
             <Form.Item name="keyword" label="关键字">
-              <Input placeholder="输入关键字，多个关键字用逗号分隔" prefix={<SearchOutlined />} />
+              <Input
+                placeholder="输入关键字，多个关键字用逗号分隔"
+                prefix={<SearchOutlined />}
+              />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -73,15 +91,26 @@ const MessageFilter: React.FC<MessageFilterProps> = ({ onFilterChange }) => {
               <RangePicker
                 showTime
                 value={dateRange}
-                onChange={(date, dateString) => setDateRange(date)}
+                onChange={(date, _dateString) => setDateRange(date)}
                 placeholder={['开始时间', '结束时间']}
                 style={{ width: '100%' }}
               />
             </Form.Item>
           </Col>
-          <Col span={12} style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+          <Col
+            span={12}
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'flex-end',
+            }}
+          >
             <Space size="middle">
-              <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch}>
+              <Button
+                type="primary"
+                icon={<SearchOutlined />}
+                onClick={handleSearch}
+              >
                 搜索
               </Button>
               <Button icon={<FilterOutlined />} onClick={handleSearch}>

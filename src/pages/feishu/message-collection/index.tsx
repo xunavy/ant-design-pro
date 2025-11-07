@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import { Tabs } from 'antd';
-import MessageList from './components/MessageList';
+import React, { useState } from 'react';
 import MessageFilter from './components/MessageFilter';
-import type { Message } from '@/models/feishu';
+import MessageList from './components/MessageList';
 
 const { TabPane } = Tabs;
 

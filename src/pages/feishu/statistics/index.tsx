@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { PageContainer } from '@ant-design/pro-components';
-import { Card, Tabs, Space, Button } from 'antd';
 import { ExportOutlined } from '@ant-design/icons';
-import StatisticsFilter from './components/StatisticsFilter';
-import SingleKeywordStats from './components/SingleKeywordStats';
-import MultiKeywordStats from './components/MultiKeywordStats';
+import { PageContainer } from '@ant-design/pro-components';
+import { Button, Card, Tabs } from 'antd';
+import React, { useState } from 'react';
 import type { MessageStatisticsResult } from '@/services/feishu/typings';
+import MultiKeywordStats from './components/MultiKeywordStats';
+import SingleKeywordStats from './components/SingleKeywordStats';
+import StatisticsFilter from './components/StatisticsFilter';
 
 const { TabPane } = Tabs;
 
 const Statistics: React.FC = () => {
-  const [statisticsResult, setStatisticsResult] = useState<MessageStatisticsResult | null>(null);
+  const [statisticsResult, setStatisticsResult] =
+    useState<MessageStatisticsResult | null>(null);
   const [filterParams, setFilterParams] = useState<any>({});
 
   const handleFilterChange = (params: any) => {
@@ -66,7 +67,11 @@ const Statistics: React.FC = () => {
       <Card style={{ marginBottom: 20 }}>
         <StatisticsFilter onFilterChange={handleFilterChange} />
         <div style={{ textAlign: 'right', marginTop: 16 }}>
-          <Button type="primary" icon={<ExportOutlined />} onClick={handleExport}>
+          <Button
+            type="primary"
+            icon={<ExportOutlined />}
+            onClick={handleExport}
+          >
             导出统计结果
           </Button>
         </div>
@@ -74,10 +79,14 @@ const Statistics: React.FC = () => {
 
       <Tabs defaultActiveKey="1" style={{ marginTop: 20 }}>
         <TabPane tab="单字段统计" key="1">
-          {statisticsResult && <SingleKeywordStats data={statisticsResult.singleKeywordStats} />}
+          {statisticsResult && (
+            <SingleKeywordStats data={statisticsResult.singleKeywordStats} />
+          )}
         </TabPane>
         <TabPane tab="多字段统计" key="2">
-          {statisticsResult && <MultiKeywordStats data={statisticsResult.multiKeywordStats} />}
+          {statisticsResult && (
+            <MultiKeywordStats data={statisticsResult.multiKeywordStats} />
+          )}
         </TabPane>
       </Tabs>
     </PageContainer>

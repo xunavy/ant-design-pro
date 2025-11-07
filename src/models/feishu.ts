@@ -1,5 +1,5 @@
-import { Effect, Reducer } from 'umi';
-import { getFeishuGroups, getHistoryMessages, getRealtimeMessages } from '@/services/feishu/api';
+import type { Effect, Reducer } from 'umi';
+import { getFeishuGroups, getHistoryMessages } from '@/services/feishu/api';
 import type { FeishuGroup, FeishuMessage } from '@/services/feishu/typings';
 
 export interface FeishuState {

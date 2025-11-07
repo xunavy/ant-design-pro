@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Pagination, Card, Tag, Space, Tooltip } from 'antd';
-import { 
-  MessageOutlined, 
-  FileTextOutlined, 
-  PictureOutlined, 
-  AudioOutlined, 
-  VideoCameraOutlined, 
+import {
+  AudioOutlined,
+  EyeOutlined,
+  FileTextOutlined,
+  MessageOutlined,
+  PictureOutlined,
   UserOutlined,
-  EyeOutlined
+  VideoCameraOutlined,
 } from '@ant-design/icons';
-import { useModel, useDispatch } from '@umijs/max';
-import type { FeishuMessage } from '@/services/feishu/typings';
+import { Card, Pagination, Space, Table, Tag, Tooltip } from 'antd';
+import React, { useEffect, useState } from 'react';
 import MessageDetail from './MessageDetail';
 
 interface MessageListProps {
@@ -26,8 +24,6 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
   const [total, setTotal] = useState(0);
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [detailVisible, setDetailVisible] = useState(false);
-  
-  const { initialState } = useModel('@@initialState');
 
   // 模拟消息数据
   const mockMessages: Message[] = Array.from({ length: 50 }, (_, i) => ({
@@ -37,13 +33,23 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
     sender: {
       id: `user_${(i % 10) + 1}`,
       name: `用户${(i % 10) + 1}`,
-      avatar: `https://ui-avatars.com/api/?name=用户${(i % 10) + 1}&background=random`
+      avatar: `https://ui-avatars.com/api/?name=用户${(i % 10) + 1}&background=random`,
     },
     content: `这是一条${i % 2 === 0 ? '文本' : '富文本'}消息，包含关键字测试 ${i + 1}`,
-    type: i % 5 === 0 ? 'text' : i % 5 === 1 ? 'post' : i % 5 === 2 ? 'image' : i % 5 === 3 ? 'file' : 'audio',
+    type:
+      i % 5 === 0
+        ? 'text'
+        : i % 5 === 1
+          ? 'post'
+          : i % 5 === 2
+            ? 'image'
+            : i % 5 === 3
+              ? 'file'
+              : 'audio',
     timestamp: Date.now() - i * 60000, // 模拟不同时间的消息
     mentionedUsers: i % 3 === 0 ? [{ id: 'user_1', name: '用户1' }] : [],
-    attachments: i % 4 === 0 ? [{ name: `附件${i + 1}.pdf`, size: 1024 * 1024 }] : []
+    attachments:
+      i % 4 === 0 ? [{ name: `附件${i + 1}.pdf`, size: 1024 * 1024 }] : [],
   }));
 
   // 根据消息类型获取对应的图标
@@ -87,7 +93,7 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
   // 加载消息数据
   const loadMessages = () => {
     setLoading(true);
-    
+
     // 模拟API请求延迟
     setTimeout(() => {
       // 这里可以根据filterParams进行实际的API请求
@@ -95,7 +101,7 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
       const paginatedMessages = mockMessages.slice(startIndex, endIndex);
-      
+
       setMessages(paginatedMessages);
       setTotal(mockMessages.length);
       setLoading(false);
@@ -124,16 +130,16 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
           sender: {
             id: `user_${Math.floor(Math.random() * 10) + 1}`,
             name: `用户${Math.floor(Math.random() * 10) + 1}`,
-            avatar: `https://ui-avatars.com/api/?name=用户${Math.floor(Math.random() * 10) + 1}&background=random`
+            avatar: `https://ui-avatars.com/api/?name=用户${Math.floor(Math.random() * 10) + 1}&background=random`,
           },
           content: `这是一条实时消息 ${new Date().toLocaleTimeString()}`,
           type: 'text',
           timestamp: Date.now(),
           mentionedUsers: [],
-          attachments: []
+          attachments: [],
         };
-        
-        setMessages(prev => [newMessage, ...prev]);
+
+        setMessages((prev) => [newMessage, ...prev]);
       }, 5000);
 
       return () => clearInterval(interval);
@@ -152,7 +158,7 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
           {getMessageTypeIcon(type)}
           {getMessageTypeTag(type)}
         </Space>
-      )
+      ),
     },
     {
       title: '发送人',
@@ -161,21 +167,25 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
       width: 120,
       render: (sender: { name: string; avatar: string }) => (
         <Space align="center">
-          <img src={sender.avatar} alt={sender.name} style={{ width: 32, height: 32, borderRadius: '50%' }} />
+          <img
+            src={sender.avatar}
+            alt={sender.name}
+            style={{ width: 32, height: 32, borderRadius: '50%' }}
+          />
           <span>{sender.name}</span>
         </Space>
-      )
+      ),
     },
     {
       title: '消息内容',
       dataIndex: 'content',
       key: 'content',
       ellipsis: true,
-      render: (content: string, record: Message) => (
+      render: (content: string, _record: Message) => (
         <Tooltip title={content}>
           <span>{content}</span>
         </Tooltip>
-      )
+      ),
     },
     {
       title: '@成员',
@@ -184,13 +194,13 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
       width: 150,
       render: (users: { name: string }[]) => (
         <Space>
-          {users.map((user, index) => (
-            <Tag key={index} color="blue" icon={<UserOutlined />}>
+          {users.map((user) => (
+            <Tag key={user.name} color="blue" icon={<UserOutlined />}>
               {user.name}
             </Tag>
           ))}
         </Space>
-      )
+      ),
     },
     {
       title: '附件',
@@ -199,13 +209,13 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
       width: 120,
       render: (attachments: { name: string }[]) => (
         <Space direction="vertical" size="small">
-          {attachments.map((attach, index) => (
-            <Tag key={index} color="gray">
+          {attachments.map((attach) => (
+            <Tag key={attach.name} color="gray">
               {attach.name}
             </Tag>
           ))}
         </Space>
-      )
+      ),
     },
     {
       title: '发送时间',
@@ -215,7 +225,7 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
       sorter: (a: Message, b: Message) => a.timestamp - b.timestamp,
       render: (timestamp: number) => (
         <span>{new Date(timestamp).toLocaleString()}</span>
-      )
+      ),
     },
     {
       title: '操作',
@@ -224,8 +234,8 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
       render: (_, record: Message) => (
         <Space>
           <Tooltip title="查看详情">
-            <EyeOutlined 
-              style={{ cursor: 'pointer', color: '#1890ff' }} 
+            <EyeOutlined
+              style={{ cursor: 'pointer', color: '#1890ff' }}
               onClick={() => {
                 setSelectedMessage(record);
                 setDetailVisible(true);
@@ -233,8 +243,8 @@ const MessageList: React.FC<MessageListProps> = ({ filterParams, type }) => {
             />
           </Tooltip>
         </Space>
-      )
-    }
+      ),
+    },
   ];
 
   return (
